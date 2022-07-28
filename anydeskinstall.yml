@@ -1,0 +1,22 @@
+---
+- name: Install Anydesk
+  hosts: sandeep
+  become: true
+  tasks:
+  - name: adding RPM key
+    rpm_key:
+      key: https://keys.anydesk.com/repos/RPM-GPG-KEY
+      state: present
+  - name: Adding repository
+    yum_repository:
+      name: Anydesk
+      description: Anydesk repository
+      baseurl: http://rpm.anydesk.com/centos/$releasever/$basearch/
+      enabled: true
+      gpgcheck: true
+      gpgkey: https://keys.anydesk.com/repos/RPM-GPG-KEY
+  - name: Installing Anydesk
+    yum: 
+      name: "anydesk" 
+      state: latest
+      update_cache: true
